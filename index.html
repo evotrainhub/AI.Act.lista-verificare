@@ -169,6 +169,43 @@
   .count b{display:block;font-family:'Literata',Georgia,serif;font-size:21px;color:#fff}
   .count span{font-size:12px;color:#8FA3AD}
 
+  /* ---------- Captare email ---------- */
+  .capture{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:30px 28px;margin:28px 0 20px;
+  }
+  .capture h3{font-family:'Literata',Georgia,serif;font-size:20px;font-weight:600;margin-bottom:8px;color:var(--text)}
+  .capture .sub{font-size:14.5px;color:var(--muted);margin-bottom:20px;max-width:520px;line-height:1.6}
+  .capture .row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .capture input[type=text],.capture input[type=email]{
+    flex:1;min-width:190px;font-family:'Inter',sans-serif;font-size:14.5px;
+    border:1px solid var(--line);border-radius:8px;padding:11px 13px;
+    background:var(--paper);color:var(--text);
+  }
+  .capture input:focus{outline:none;border-color:var(--teal);background:#fff}
+  .capture .consent-row{display:flex;align-items:flex-start;gap:10px;margin:12px 0;cursor:pointer}
+  .capture .consent-row input[type=checkbox]{
+    appearance:none;width:18px;height:18px;border:2px solid #CFC6B8;border-radius:5px;
+    flex-shrink:0;margin-top:2px;cursor:pointer;position:relative;background:#fff;transition:all .18s;
+  }
+  .capture .consent-row input[type=checkbox]:checked{background:var(--teal);border-color:var(--teal)}
+  .capture .consent-row input[type=checkbox]:checked::after{
+    content:'';position:absolute;left:5px;top:1px;width:4px;height:9px;
+    border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg);
+  }
+  .capture .consent-row span{font-size:13.5px;color:var(--muted);line-height:1.55}
+  .capture .consent-row a{color:var(--teal)}
+  .capture button.btn-primary{width:100%;padding:13px 20px;font-size:15px;margin-top:4px}
+  .capture .err{color:var(--hot);font-size:13px;margin-top:8px;display:none}
+  .capture .ok{
+    display:none;background:var(--calm-bg);border:1px solid rgba(14,124,140,.3);border-radius:9px;
+    padding:16px 18px;color:var(--teal-deep);font-size:14.5px;line-height:1.6;margin-top:6px;
+  }
+  .capture .preview{
+    font-size:12.5px;color:var(--faint);margin-top:14px;padding-top:14px;border-top:1px solid #F0EBE3;
+  }
+  .capture .preview b{color:var(--muted)}
+
   /* ---------- Butoane ---------- */
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 8px}
   button.btn,a.btn{
@@ -576,8 +613,45 @@
     </div>
   </div>
 
+  <div class="capture no-print" id="capture">
+    <h3 class="serif">Vreți planul de acțiune pentru punctele nebifate?</h3>
+    <p class="sub" id="capture-sub">
+      Vă trimit pe email o listă cu exact ce v-a rămas de făcut, în ordinea termenelor, cu pașii
+      concreți pentru fiecare punct nebifat.
+    </p>
+
+    <form id="capture-form">
+      <div class="row">
+        <input type="text" id="cf-org" placeholder="Organizația dumneavoastră" autocomplete="organization" />
+        <input type="email" id="cf-email" placeholder="Adresa de email *" autocomplete="email" required />
+      </div>
+
+      <label class="consent-row">
+        <input type="checkbox" id="cf-consent-1" required />
+        <span>
+          Sunt de acord ca datele transmise să fie prelucrate pentru a primi planul de acțiune solicitat,
+          conform <a href="https://www.evotrainhub.com/informatii-legale" target="_blank" rel="noopener">politicii de confidențialitate</a>. *
+        </span>
+      </label>
+
+      <label class="consent-row">
+        <input type="checkbox" id="cf-consent-2" />
+        <span>Sunt de acord să primesc și alte materiale despre inteligență artificială din partea EvoTrainHub (opțional).</span>
+      </label>
+
+      <button type="submit" class="btn btn-primary">Trimiteți-mi planul de acțiune</button>
+      <p class="err" id="cf-err"></p>
+      <p class="ok" id="cf-ok">
+        Mulțumesc! Am primit solicitarea și vă răspund în maximum 24 de ore în zilele lucrătoare, cu
+        planul de acțiune pentru punctele nebifate.
+      </p>
+    </form>
+
+    <p class="preview" id="cf-preview">Bifați câteva puncte mai sus ca să vedeți ce anume vă rămâne de făcut.</p>
+  </div>
+
   <div class="actions no-print">
-    <button class="btn btn-primary" onclick="window.print()">Salvează ca PDF</button>
+    <button class="btn btn-ghost" onclick="window.print()">Salvează ca PDF</button>
     <button class="btn btn-ghost" onclick="resetAll()">Șterge bifele</button>
   </div>
 
@@ -673,6 +747,100 @@
 
   cutii.forEach(function(c){ c.addEventListener('change', actualizeaza); });
   actualizeaza();
+
+  /* ---------------- Captare email: plan de acțiune ---------------- */
+  var FORMSPREE_ID = 'xzdnljza';
+
+  function itemiNebifati(){
+    return cutii
+      .filter(function(c){ return !c.checked; })
+      .map(function(c){
+        var titlu = c.parentElement.querySelector('.item-title');
+        var tag = c.parentElement.querySelector('.tag');
+        return (tag ? '[' + tag.textContent.trim() + '] ' : '') + (titlu ? titlu.textContent.trim() : '');
+      });
+  }
+
+  function actualizeazaPreview(){
+    var lista = itemiNebifati();
+    var prev = document.getElementById('cf-preview');
+    var sub = document.getElementById('capture-sub');
+    if (lista.length === 0){
+      prev.innerHTML = '<b>Toate punctele sunt bifate.</b> Vă pot trimite oricum planul, ca reper de revenit anual.';
+      sub.textContent = 'Toate punctele sunt bifate — vă trimit oricum un rezumat, util pentru reverificarea anuală.';
+    } else {
+      sub.textContent = 'Vă trimit pe email o listă cu exact cele ' + lista.length + ' ' +
+        (lista.length === 1 ? 'punct nebifat' : 'puncte nebifate') + ', în ordinea termenelor, cu pașii concreți pentru fiecare.';
+      var afisate = lista.slice(0, 3).join(' · ');
+      prev.innerHTML = '<b>' + lista.length + ' ' + (lista.length === 1 ? 'punct nebifat' : 'puncte nebifate') + ':</b> ' +
+        afisate + (lista.length > 3 ? ' și încă ' + (lista.length - 3) + '.' : '.');
+    }
+  }
+  cutii.forEach(function(c){ c.addEventListener('change', actualizeazaPreview); });
+  actualizeazaPreview();
+
+  document.getElementById('capture-form').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var org = document.getElementById('cf-org').value.trim();
+    var email = document.getElementById('cf-email').value.trim();
+    var consent1 = document.getElementById('cf-consent-1').checked;
+    var consent2 = document.getElementById('cf-consent-2').checked;
+    var errEl = document.getElementById('cf-err');
+    var okEl = document.getElementById('cf-ok');
+    var btn = e.target.querySelector('button[type=submit]');
+
+    errEl.style.display = 'none';
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      errEl.textContent = 'Introduceți o adresă de email validă.';
+      errEl.style.display = 'block';
+      return;
+    }
+    if (!consent1){
+      errEl.textContent = 'Este necesar acordul pentru prelucrarea datelor.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    var lista = itemiNebifati();
+    var scorCurent = document.getElementById('scor').textContent;
+
+    var payload = {
+      _subject: 'Plan de acțiune – listă de verificare EU AI Act',
+      email: email,
+      organizatie: org || '(nespecificată)',
+      scor_bifat: scorCurent + '%',
+      puncte_nebifate_count: lista.length,
+      puncte_nebifate: lista.length ? lista.join('\n') : '(toate punctele sunt bifate)',
+      acord_materiale_viitoare: consent2 ? 'da' : 'nu',
+      sursa: 'Listă de verificare EU AI Act – evotrainhub.github.io'
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'Se trimite...';
+
+    fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function(res){
+        if (res.ok){
+          document.getElementById('capture-form').reset();
+          document.getElementById('capture-form').style.display = 'none';
+          okEl.style.display = 'block';
+        } else {
+          throw new Error('Formspree a răspuns cu eroare');
+        }
+      })
+      .catch(function(){
+        errEl.textContent = 'Solicitarea nu a putut fi trimisă. Vă rog să încercați din nou sau să scrieți direct la evotrainhub@gmail.com.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Trimiteți-mi planul de acțiune';
+      });
+  });
 </script>
 
 </body>
