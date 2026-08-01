@@ -205,6 +205,23 @@
     font-size:12.5px;color:var(--faint);margin-top:14px;padding-top:14px;border-top:1px solid #F0EBE3;
   }
   .capture .preview b{color:var(--muted)}
+  .gen-actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+
+  /* ---------- Plan generat ---------- */
+  .plan{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:28px;margin:20px 0;
+  }
+  .plan h3{font-family:'Literata',Georgia,serif;font-size:20px;font-weight:600;margin-bottom:4px}
+  .plan .sub{font-size:14px;color:var(--muted);margin-bottom:20px}
+  .plan-item{display:flex;gap:14px;padding:14px 0;border-top:1px solid #F0EBE3}
+  .plan-item:first-of-type{border-top:none}
+  .plan-item .num{font-family:'Literata',Georgia,serif;font-weight:600;color:#C4B8A9;min-width:24px}
+  .plan-item .body{flex:1}
+  .plan-item .body b{font-size:14.5px}
+  .plan-item .body .d{font-size:13.5px;color:var(--muted);margin-top:3px;line-height:1.55}
+  .plan-item .body .m{font-size:13.5px;color:var(--teal-deep);background:var(--calm-bg);border-radius:7px;padding:8px 11px;margin-top:8px;line-height:1.5}
+  .plan-empty{font-size:14.5px;color:var(--muted);padding:8px 0}
 
   /* ---------- Butoane ---------- */
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 8px}
@@ -613,46 +630,53 @@
     </div>
   </div>
 
+  <div class="plan" id="plan">
+    <h3 class="serif">Planul dumneavoastră de acțiune</h3>
+    <p class="sub" id="plan-sub">Generat automat, pe baza punctelor nebifate. Se actualizează pe măsură ce bifați.</p>
+    <div id="plan-list"></div>
+  </div>
+
+  <div class="actions no-print">
+    <button class="btn btn-primary" onclick="window.print()">Salvează planul ca PDF</button>
+    <button class="btn btn-ghost" onclick="resetAll()">Șterge bifele</button>
+  </div>
+
   <div class="capture no-print" id="capture">
-    <h3 class="serif">Vreți planul de acțiune pentru punctele nebifate?</h3>
-    <p class="sub" id="capture-sub">
-      Vă trimit pe email o listă cu exact ce v-a rămas de făcut, în ordinea termenelor, cu pașii
-      concreți pentru fiecare punct nebifat.
+    <h3 class="serif">Doriți o interpretare personalizată a rezultatului?</h3>
+    <p class="sub">
+      Planul de mai sus este generat automat, este complet și poate fi consultat gratuit, fără completarea
+      altor informații. Pentru o discuție aplicată despre ce înseamnă rezultatul pentru organizația
+      dumneavoastră și, acolo unde este relevant, despre opțiunile de formare a personalului, îmi puteți
+      lăsa datele de contact.
     </p>
 
     <form id="capture-form">
       <div class="row">
-        <input type="text" id="cf-org" placeholder="Organizația dumneavoastră" autocomplete="organization" />
-        <input type="email" id="cf-email" placeholder="Adresa de email *" autocomplete="email" required />
+        <input type="text" id="cf-org" placeholder="Denumirea organizației" autocomplete="organization" />
+        <input type="email" id="cf-email" placeholder="Adresa de e-mail *" autocomplete="email" required />
       </div>
 
       <label class="consent-row">
         <input type="checkbox" id="cf-consent-1" required />
         <span>
-          Sunt de acord ca datele transmise să fie prelucrate pentru a primi planul de acțiune solicitat,
-          conform <a href="https://www.evotrainhub.com/informatii-legale" target="_blank" rel="noopener">politicii de confidențialitate</a>. *
+          Sunt de acord ca datele transmise să fie prelucrate pentru a primi un răspuns la solicitarea mea,
+          în conformitate cu <a href="https://www.evotrainhub.com/informatii-legale" target="_blank" rel="noopener">Politica de confidențialitate</a>. *
         </span>
       </label>
 
       <label class="consent-row">
         <input type="checkbox" id="cf-consent-2" />
-        <span>Sunt de acord să primesc și alte materiale despre inteligență artificială din partea EvoTrainHub (opțional).</span>
+        <span>Doresc să primesc și materiale informative despre inteligența artificială din partea EvoTrainHub.</span>
       </label>
 
-      <button type="submit" class="btn btn-primary">Trimiteți-mi planul de acțiune</button>
+      <button type="submit" class="btn btn-primary">Solicitați o discuție personalizată</button>
       <p class="err" id="cf-err"></p>
       <p class="ok" id="cf-ok">
-        Mulțumesc! Am primit solicitarea și vă răspund în maximum 24 de ore în zilele lucrătoare, cu
-        planul de acțiune pentru punctele nebifate.
+        Mulțumesc! Vă răspund în maximum 24 de ore în zilele lucrătoare.
       </p>
     </form>
 
-    <p class="preview" id="cf-preview">Bifați câteva puncte mai sus ca să vedeți ce anume vă rămâne de făcut.</p>
-  </div>
-
-  <div class="actions no-print">
-    <button class="btn btn-ghost" onclick="window.print()">Salvează ca PDF</button>
-    <button class="btn btn-ghost" onclick="resetAll()">Șterge bifele</button>
+    <p class="preview" id="cf-preview">Rezultatul generat va fi atașat automat solicitării dumneavoastră.</p>
   </div>
 
   <!-- ================= CTA ================= -->
@@ -746,38 +770,57 @@
   }
 
   cutii.forEach(function(c){ c.addEventListener('change', actualizeaza); });
-  actualizeaza();
 
-  /* ---------------- Captare email: plan de acțiune ---------------- */
-  var FORMSPREE_ID = 'xzdnljza';
-
+  /* ---------------- Plan de acțiune: generat instant, din conținutul deja scris ---------------- */
   function itemiNebifati(){
     return cutii
       .filter(function(c){ return !c.checked; })
       .map(function(c){
-        var titlu = c.parentElement.querySelector('.item-title');
-        var tag = c.parentElement.querySelector('.tag');
-        return (tag ? '[' + tag.textContent.trim() + '] ' : '') + (titlu ? titlu.textContent.trim() : '');
+        var wrap = c.parentElement;
+        var titlu = wrap.querySelector('.item-title');
+        var tag = wrap.querySelector('.tag');
+        var desc = wrap.querySelector('.item-desc');
+        var masura = wrap.querySelector('.item-do');
+        return {
+          tag: tag ? tag.textContent.trim() : '',
+          titlu: titlu ? titlu.textContent.trim() : '',
+          desc: desc ? desc.textContent.trim() : '',
+          masura: masura ? masura.textContent.trim().replace(/^Exemplu de măsură:\s*/, '') : ''
+        };
       });
   }
 
-  function actualizeazaPreview(){
+  function genereazaPlan(){
     var lista = itemiNebifati();
-    var prev = document.getElementById('cf-preview');
-    var sub = document.getElementById('capture-sub');
+    var cont = document.getElementById('plan-list');
+    var sub = document.getElementById('plan-sub');
+
     if (lista.length === 0){
-      prev.innerHTML = '<b>Toate punctele sunt bifate.</b> Vă pot trimite oricum planul, ca reper de revenit anual.';
-      sub.textContent = 'Toate punctele sunt bifate — vă trimit oricum un rezumat, util pentru reverificarea anuală.';
-    } else {
-      sub.textContent = 'Vă trimit pe email o listă cu exact cele ' + lista.length + ' ' +
-        (lista.length === 1 ? 'punct nebifat' : 'puncte nebifate') + ', în ordinea termenelor, cu pașii concreți pentru fiecare.';
-      var afisate = lista.slice(0, 3).join(' · ');
-      prev.innerHTML = '<b>' + lista.length + ' ' + (lista.length === 1 ? 'punct nebifat' : 'puncte nebifate') + ':</b> ' +
-        afisate + (lista.length > 3 ? ' și încă ' + (lista.length - 3) + '.' : '.');
+      sub.textContent = 'Toate punctele sunt bifate. Reveniți la acest exercițiu la fiecare instrument nou.';
+      cont.innerHTML = '<p class="plan-empty">Nu mai aveți puncte nebifate. Bun reper: reluați verificarea o dată pe an.</p>';
+      return;
     }
+
+    sub.textContent = 'Aveți ' + lista.length + ' ' + (lista.length === 1 ? 'punct nebifat' : 'puncte nebifate') +
+      ', în ordinea în care apar în listă.';
+
+    cont.innerHTML = lista.map(function(it, i){
+      return '<div class="plan-item">' +
+        '<span class="num serif">' + (i + 1) + '</span>' +
+        '<div class="body">' +
+        '<b>' + it.titlu + '</b>' +
+        (it.desc ? '<div class="d">' + it.desc + '</div>' : '') +
+        (it.masura ? '<div class="m"><b>Exemplu de măsură:</b> ' + it.masura + '</div>' : '') +
+        '</div></div>';
+    }).join('');
   }
-  cutii.forEach(function(c){ c.addEventListener('change', actualizeazaPreview); });
-  actualizeazaPreview();
+
+  cutii.forEach(function(c){ c.addEventListener('change', genereazaPlan); });
+  actualizeaza();
+  genereazaPlan();
+
+  /* ---------------- Captare contact: opțională, doar pentru urmărire personală ---------------- */
+  var FORMSPREE_ID = 'xzdnljza';
 
   document.getElementById('capture-form').addEventListener('submit', function(e){
     e.preventDefault();
@@ -807,12 +850,12 @@
     var scorCurent = document.getElementById('scor').textContent;
 
     var payload = {
-      _subject: 'Plan de acțiune – listă de verificare EU AI Act',
+      _subject: 'Contact din listă de verificare EU AI Act',
       email: email,
       organizatie: org || '(nespecificată)',
       scor_bifat: scorCurent + '%',
-      puncte_nebifate_count: lista.length,
-      puncte_nebifate: lista.length ? lista.join('\n') : '(toate punctele sunt bifate)',
+      numar_puncte_nebifate: lista.length,
+      titluri_puncte_nebifate: lista.length ? lista.map(function(it){ return it.titlu; }).join(' | ') : '(toate punctele sunt bifate)',
       acord_materiale_viitoare: consent2 ? 'da' : 'nu',
       sursa: 'Listă de verificare EU AI Act – evotrainhub.github.io'
     };
@@ -838,7 +881,7 @@
         errEl.textContent = 'Solicitarea nu a putut fi trimisă. Vă rog să încercați din nou sau să scrieți direct la evotrainhub@gmail.com.';
         errEl.style.display = 'block';
         btn.disabled = false;
-        btn.textContent = 'Trimiteți-mi planul de acțiune';
+        btn.textContent = 'Trimiteți contactul meu';
       });
   });
 </script>
