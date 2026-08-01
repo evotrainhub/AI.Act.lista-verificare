@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Listă de verificare EU AI Act – EvoTrainHub</title>
+<meta name="description" content="Listă de verificare pentru organizații: ce obligații din Regulamentul european privind inteligența artificială sunt deja în vigoare, ce se aplică din 2 august 2026 și ce a fost amânat." />
+<link rel="icon" href="https://horizons-cdn.hostinger.com/650be158-2154-41b8-ae22-381180a8454c/logo-PODNm.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1F2A;
+    --teal:#0E7C8C;
+    --teal-light:#5FD3E0;
+    --teal-deep:#0C5F73;
+    --paper:#FAF8F4;
+    --sand:#F3EFE8;
+    --line:#E7E1D8;
+    --text:#1C2B33;
+    --muted:#5B6B75;
+    --faint:#94A3AC;
+    --hot:#C4552F;
+    --hot-bg:#FBEDE7;
+    --amber:#B87514;
+    --amber-bg:#FCF2DF;
+    --calm:#0E7C8C;
+    --calm-bg:#E9F5F7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--paper);color:var(--text);
+    line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Literata',Georgia,serif}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+  /* ---------- Antet ---------- */
+  header.top{
+    background:var(--ink);color:#fff;position:relative;overflow:hidden;
+  }
+  header.top::before{
+    content:'';position:absolute;top:-180px;left:-120px;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle,#0E7C8C 0%,transparent 65%);opacity:.28;
+  }
+  header.top::after{
+    content:'';position:absolute;bottom:-220px;right:-100px;width:460px;height:460px;border-radius:50%;
+    background:radial-gradient(circle,#E8834A 0%,transparent 68%);opacity:.20;
+  }
+  .top-inner{position:relative;padding:38px 0 42px}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+  .brand img{width:38px;height:38px;border-radius:8px}
+  .brand span{font-size:17px;font-weight:600;letter-spacing:-.01em}
+  .eyebrow{
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+    color:var(--teal-light);margin-bottom:14px;
+  }
+  h1{font-size:32px;line-height:1.15;font-weight:600;letter-spacing:-.02em;margin-bottom:14px}
+  h1 em{font-style:normal;color:var(--teal-light)}
+  .lede{color:#B8C7CF;font-size:16px;max-width:640px}
+  .stamp{
+    margin-top:22px;display:inline-block;font-size:12px;color:#8FA3AD;
+    border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:7px 12px;
+  }
+
+  /* ---------- Bară de progres ---------- */
+  .progress-bar{
+    position:sticky;top:0;z-index:50;background:rgba(250,248,244,.94);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  }
+  .pb-inner{display:flex;align-items:center;gap:18px;padding:14px 0}
+  .pb-track{flex:1;height:9px;border-radius:99px;background:var(--line);overflow:hidden}
+  .pb-fill{
+    height:100%;width:0%;border-radius:99px;
+    background:linear-gradient(90deg,#E8834A 0%,#E5A93C 45%,#0E7C8C 100%);
+    transition:width .35s ease;
+  }
+  .pb-num{font-family:'Literata',Georgia,serif;font-size:26px;font-weight:600;color:var(--teal);min-width:74px;text-align:right}
+  .pb-label{font-size:12px;color:var(--faint);min-width:96px;line-height:1.3}
+
+  /* ---------- Cuprins / avertisment ---------- */
+  .notice{
+    background:var(--amber-bg);border:1px solid #EBD9AE;border-left:4px solid #E5A93C;
+    border-radius:10px;padding:18px 20px;margin:32px 0;
+  }
+  .notice strong{display:block;margin-bottom:6px;font-size:15px}
+  .notice p{font-size:14px;color:#6B5A34;line-height:1.65}
+
+  /* ---------- Calendar ---------- */
+  .cal{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px 24px;margin:32px 0}
+  .cal h2{font-family:'Literata',Georgia,serif;font-size:21px;font-weight:600;margin-bottom:6px}
+  .cal .sub{font-size:14px;color:var(--muted);margin-bottom:22px}
+  .cal ul{list-style:none}
+  .cal li{display:flex;gap:16px;padding:13px 0;border-top:1px solid #F0EBE3;align-items:flex-start}
+  .cal li:first-of-type{border-top:none}
+  .cal .d{font-family:'Literata',Georgia,serif;font-weight:600;font-size:14.5px;min-width:132px;flex-shrink:0}
+  .cal .d.past{color:var(--faint)}
+  .cal .d.now{color:var(--hot)}
+  .cal .d.next{color:var(--amber)}
+  .cal .d.far{color:var(--teal)}
+  .cal .t{font-size:14.5px;color:var(--muted);line-height:1.6}
+  .cal .t b{color:var(--text);font-weight:600}
+  @media (max-width:640px){.cal li{flex-direction:column;gap:3px}.cal .d{min-width:0}}
+
+  /* ---------- Secțiuni ---------- */
+  section.block{margin:44px 0}
+  .sec-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:8px}
+  .sec-num{
+    font-family:'Literata',Georgia,serif;font-size:26px;font-weight:600;
+    color:#C4B8A9;line-height:1;padding-top:4px;min-width:38px;
+  }
+  .sec-head h2{font-family:'Literata',Georgia,serif;font-size:23px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+  .sec-desc{font-size:14.5px;color:var(--muted);margin:0 0 20px 54px;max-width:660px}
+
+  /* ---------- Elemente ---------- */
+  .item{
+    display:flex;gap:14px;background:#fff;border:1px solid var(--line);
+    border-radius:11px;padding:18px 20px;margin-bottom:10px;margin-left:54px;
+    transition:border-color .2s,box-shadow .2s,background .2s;
+  }
+  .item:hover{border-color:rgba(14,124,140,.4);box-shadow:0 3px 14px rgba(11,31,42,.06)}
+  .item.done{background:#F6FBFB;border-color:rgba(14,124,140,.45)}
+  .item input[type=checkbox]{
+    appearance:none;width:21px;height:21px;border:2px solid #CFC6B8;border-radius:6px;
+    flex-shrink:0;margin-top:2px;cursor:pointer;position:relative;background:#fff;transition:all .18s;
+  }
+  .item input[type=checkbox]:hover{border-color:var(--teal)}
+  .item input[type=checkbox]:checked{background:var(--teal);border-color:var(--teal)}
+  .item input[type=checkbox]:checked::after{
+    content:'';position:absolute;left:6px;top:2px;width:5px;height:10px;
+    border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(42deg);
+  }
+  .item input[type=checkbox]:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+  .item-body{flex:1;min-width:0}
+  .item-title{font-weight:600;font-size:15.5px;line-height:1.4;margin-bottom:6px}
+  .item-desc{font-size:14px;color:var(--muted);line-height:1.6}
+  .item-do{
+    font-size:13.5px;color:var(--teal-deep);background:var(--calm-bg);
+    border-radius:7px;padding:9px 12px;margin-top:10px;line-height:1.55;
+  }
+  .item-do b{font-weight:600}
+
+  .tag{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;
+    padding:3px 9px;border-radius:6px;margin-bottom:8px;white-space:nowrap;
+  }
+  .t-now{background:var(--hot-bg);color:var(--hot)}
+  .t-soon{background:var(--amber-bg);color:var(--amber)}
+  .t-later{background:var(--calm-bg);color:var(--calm)}
+  .t-reco{background:var(--sand);color:#8A7B66}
+
+  /* ---------- Rezultat ---------- */
+  .result{
+    background:var(--ink);color:#fff;border-radius:14px;padding:34px 30px;margin:48px 0 20px;
+    position:relative;overflow:hidden;
+  }
+  .result::after{
+    content:'';position:absolute;top:-140px;right:-90px;width:380px;height:380px;border-radius:50%;
+    background:radial-gradient(circle,#E8834A 0%,transparent 68%);opacity:.22;
+  }
+  .result-inner{position:relative}
+  .result h2{font-family:'Literata',Georgia,serif;font-size:22px;font-weight:600;margin-bottom:18px}
+  .score{font-family:'Literata',Georgia,serif;font-size:52px;font-weight:700;color:var(--teal-light);line-height:1}
+  .score small{font-size:20px;color:#8FA3AD;font-weight:400}
+  #verdict{color:#B8C7CF;font-size:15px;margin-top:14px;max-width:600px;line-height:1.7}
+  .counts{display:flex;gap:26px;flex-wrap:wrap;margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14)}
+  .count b{display:block;font-family:'Literata',Georgia,serif;font-size:21px;color:#fff}
+  .count span{font-size:12px;color:#8FA3AD}
+
+  /* ---------- Butoane ---------- */
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 8px}
+  button.btn,a.btn{
+    font-family:'Inter',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer;
+    border-radius:9px;padding:12px 20px;border:1px solid transparent;text-decoration:none;
+    display:inline-block;transition:background .2s,border-color .2s,color .2s;
+  }
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover{background:#1293A6}
+  .btn-ghost{background:transparent;color:var(--muted);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+
+  /* ---------- Subsol ---------- */
+  .cta{
+    background:var(--teal-deep);color:#fff;border-radius:14px;padding:32px 30px;margin:36px 0;
+  }
+  .cta h2{font-family:'Literata',Georgia,serif;font-size:22px;font-weight:600;margin-bottom:10px}
+  .cta p{color:#CDE7EC;font-size:15px;margin-bottom:20px;max-width:600px}
+  .cta a{color:#fff;font-weight:600}
+  .cta .btn-white{background:#fff;color:var(--ink);border-radius:9px;padding:12px 22px;text-decoration:none;font-weight:600;display:inline-block;font-size:14.5px}
+
+  footer.foot{border-top:1px solid var(--line);padding:26px 0 46px;font-size:12.5px;color:var(--faint);line-height:1.7}
+  footer.foot a{color:var(--teal)}
+
+  /* ---------- Print / PDF ---------- */
+  @media print{
+    body{background:#fff}
+    .progress-bar,.actions,.no-print{display:none !important}
+    header.top{background:#0B1F2A !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .result,.cta{-webkit-print-color-adjust:exact;print-color-adjust:exact;page-break-inside:avoid}
+    .item{page-break-inside:avoid;box-shadow:none}
+    section.block{page-break-inside:avoid}
+    .tag,.item-do,.notice{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    a[href]:after{content:''}
+  }
+  @media (max-width:640px){
+    h1{font-size:26px}
+    .item,.sec-desc{margin-left:0}
+    .sec-num{font-size:21px;min-width:30px}
+    .pb-label{display:none}
+    .score{font-size:42px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+
+<!-- ================= ANTET ================= -->
+<header class="top">
+  <div class="wrap top-inner">
+    <div class="brand">
+      <img src="https://horizons-cdn.hostinger.com/650be158-2154-41b8-ae22-381180a8454c/logo-PODNm.png" alt="EvoTrainHub" />
+      <span class="serif">EvoTrainHub</span>
+    </div>
+    <p class="eyebrow">Instrument de autoevaluare</p>
+    <h1 class="serif">Regulamentul european privind inteligența artificială:<br><em>unde se află organizația dumneavoastră</em></h1>
+    <p class="lede">
+      23 de verificări, organizate în funcție de termenele aplicabile. Bifați măsurile deja îndeplinite
+      și identificați imediat ce mai aveți de făcut. Informațiile introduse nu sunt transmise către
+      EvoTrainHub sau către terți; ele rămân exclusiv în pagina deschisă și se șterg la reîncărcare.
+    </p>
+    <span class="stamp">Actualizat la 1 august 2026 · include Regulamentul (UE) 2026/1744, în vigoare din 27 iulie 2026</span>
+  </div>
+</header>
+
+<!-- ================= PROGRES ================= -->
+<div class="progress-bar">
+  <div class="wrap pb-inner">
+    <span class="pb-num" id="pct">0%</span>
+    <div class="pb-track"><div class="pb-fill" id="fill"></div></div>
+    <span class="pb-label" id="ratio">0 din 23 bifate</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="notice">
+    <strong>Ce s-a schimbat în iunie 2026</strong>
+    <p>
+      <b>Regulamentul (UE) 2026/1744</b>, cunoscut ca Digital Omnibus privind IA, a fost publicat în
+      Jurnalul Oficial la 24 iulie 2026 și a intrat în vigoare la 27 iulie 2026. Trei schimbări contează
+      pentru orice organizație: obligațiile pentru sistemele cu risc ridicat din Anexa III se amână la
+      2 decembrie 2027, iar cele din Anexa I la 2 august 2028; <b>articolul 4 privind alfabetizarea a fost
+      rescris</b> și a devenit o obligație de diligență, nu de rezultat; lista practicilor interzise s-a
+      lungit, cu două interdicții noi din 2 decembrie 2026. Obligațiile de transparență din articolul 50
+      <b>nu</b> au fost amânate. Materialele publicate înainte de iulie 2026 descriu o situație care nu mai
+      este valabilă.
+    </p>
+  </div>
+
+  <div class="cal">
+    <h2 class="serif">Calendarul aplicabil, după modificările din iulie 2026</h2>
+    <p class="sub">Datele de mai jos reflectă textul consolidat, nu versiunea inițială din 2024.</p>
+    <ul>
+      <li><span class="d past">2 februarie 2025</span><span class="t"><b>Practicile interzise</b> din articolul 5 și obligația privind alfabetizarea din articolul 4. În vigoare.</span></li>
+      <li><span class="d past">2 august 2025</span><span class="t"><b>Modelele de uz general</b> și structurile de guvernanță. În vigoare.</span></li>
+      <li><span class="d past">27 iulie 2026</span><span class="t"><b>Regulamentul (UE) 2026/1744</b> intră în vigoare. Articolul 4 este rescris ca obligație de diligență. Apare articolul 4a.</span></li>
+      <li><span class="d now">2 august 2026</span><span class="t"><b>Data generală de aplicare a regulamentului.</b> Se aplică obligațiile de transparență din articolul 50 și începe aplicarea și controlul majorității dispozițiilor rămase. Principalele cerințe din secțiunile 1–3 ale capitolului III, privind sistemele cu risc ridicat, au fost amânate.</span></li>
+      <li><span class="d next">2 decembrie 2026</span><span class="t"><b>Marcarea automat detectabilă</b> pentru sistemele generative aflate pe piață înainte de 2 august 2026. Intră în vigoare cele două interdicții noi din articolul 5.</span></li>
+      <li><span class="d far">2 august 2027</span><span class="t"><b>Sandbox-urile de reglementare</b> naționale, amânate cu un an.</span></li>
+      <li><span class="d far">2 decembrie 2027</span><span class="t"><b>Sistemele cu risc ridicat din Anexa III</b> — ocupare, educație, servicii esențiale, evaluarea bonității. Amânate de la 2 august 2026.</span></li>
+      <li><span class="d far">2 august 2028</span><span class="t"><b>Sistemele cu risc ridicat integrate</b> în produse reglementate din Anexa I.</span></li>
+    </ul>
+  </div>
+
+  <!-- ---------- 1 ---------- -->
+  <section class="block">
+    <div class="sec-head">
+      <span class="sec-num serif">01</span>
+      <h2 class="serif">Inventarul: ce folosiți, de fapt</h2>
+    </div>
+    <p class="sec-desc">Regulamentul nu impune inventarul ca obligație autonomă. Este însă premisa practică a oricărei conformități: nu puteți respecta obligații pentru sisteme despre care nu știți că sunt folosite. Aproape orice organizație are angajați care folosesc AI pe conturi personale, în afara oricărei reguli.</p>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-reco">Măsură de pregătire</span>
+        <span class="item-title">Avem o listă scrisă a instrumentelor AI folosite în organizație</span>
+        <span class="item-desc">Inclusiv cele folosite neoficial, pe abonamente personale: ChatGPT, Copilot, Claude, Gemini, instrumente de transcriere, generatoare de imagini.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> un chestionar intern de cinci întrebări trimis tuturor departamentelor. Durează o săptămână.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-reco">Măsură de pregătire</span>
+        <span class="item-title">Știm în ce calitate juridică ne aflăm pentru fiecare instrument</span>
+        <span class="item-desc">Regulamentul distinge mai multe roluri, cu obligații diferite: furnizor, implementator, importator, distribuitor, reprezentant autorizat, producător de produs, precum și furnizor devenit ca urmare a reetichetării sau a unei modificări substanțiale. Majoritatea organizațiilor sunt implementatori.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> o coloană suplimentară în inventar, cu valorile furnizor / implementator / alt operator / de stabilit.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-reco">Măsură de pregătire</span>
+        <span class="item-title">Am identificat ce categorii de date ajung în aceste instrumente</span>
+        <span class="item-desc">Date cu caracter personal ale cetățenilor sau angajaților, documente interne, informații clasificate ori cu regim special.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> discuție cu responsabilul cu protecția datelor, consemnată în scris.</span>
+      </span>
+    </label>
+  </section>
+
+  <!-- ---------- 2 ---------- -->
+  <section class="block">
+    <div class="sec-head">
+      <span class="sec-num serif">02</span>
+      <h2 class="serif">Alfabetizarea personalului — articolul 4</h2>
+    </div>
+    <p class="sec-desc">Rescris prin Regulamentul (UE) 2026/1744, în noua formă din 27 iulie 2026. Nu mai trebuie să garantați un anumit nivel de competență, ci să luați măsuri care sprijină dezvoltarea alfabetizării. Obligația a devenit mai ușoară, dar rămâne obligatorie pentru orice organizație care folosește sisteme AI, iar supravegherea națională începe în august 2026.</p>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-now">În vigoare · formă nouă din 27 iul. 2026</span>
+        <span class="item-title">Am luat măsuri concrete pentru dezvoltarea alfabetizării AI a personalului</span>
+        <span class="item-desc">Textul rescris nu vă mai cere să garantați un nivel anume, ci să luați măsuri care sprijină dezvoltarea competenței, ținând cont de pregătirea persoanelor și de contextul de utilizare. Rămâne o obligație, nu o recomandare.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> o sesiune de formare documentată, adaptată sarcinilor reale ale echipei, completată după caz de ghiduri interne, instrucțiuni și informări pe roluri. Regulamentul cere măsuri, nu un format anume.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-now">În vigoare · supraveghere din aug. 2026</span>
+        <span class="item-title">Putem dovedi cu documente măsurile luate</span>
+        <span class="item-desc">Fiind o obligație de diligență, contează ce puteți demonstra că ați făcut. Documentarea măsurilor adoptate ajută organizația să arate cum a îndeplinit obligația.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> programă, listă de prezență, dată, durată și, după caz, documente nominale de participare, păstrate la dosar.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-reco">Recomandat</span>
+        <span class="item-title">Formarea este diferențiată pe roluri</span>
+        <span class="item-desc">Un funcționar care redactează răspunsuri la petiții și un specialist de resurse umane care triază candidaturi au nevoi și riscuri diferite.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> cel puțin două niveluri, unul general și unul pentru rolurile cu impact asupra persoanelor.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-reco">Recomandat</span>
+        <span class="item-title">Există un plan de reluare periodică a formării</span>
+        <span class="item-desc">Instrumentele și funcționalitățile lor se actualizează frecvent. O formare făcută o singură dată, în urmă cu doi ani, poate să nu mai reflecte instrumentele și riscurile actuale.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> o sesiune de actualizare pe an, prinsă în planul de formare al organizației.</span>
+      </span>
+    </label>
+  </section>
+
+  <!-- ---------- 3 ---------- -->
+  <section class="block">
+    <div class="sec-head">
+      <span class="sec-num serif">03</span>
+      <h2 class="serif">Practicile interzise — articolul 5</h2>
+    </div>
+    <p class="sec-desc">Interdicțiile inițiale sunt în vigoare de la 2 februarie 2025 și nu au fost atinse de modificările din iulie 2026. Lista a fost însă extinsă, cu două interdicții noi aplicabile de la 2 decembrie 2026.</p>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-now">În vigoare din 2 feb. 2025</span>
+        <span class="item-title">Am verificat că niciun instrument folosit nu intră în categoriile interzise</span>
+        <span class="item-desc">Printre acestea: evaluarea socială a persoanelor, deducerea emoțiilor la locul de muncă sau în învățământ, categorizarea biometrică după criterii sensibile.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> verificare pe lista din articolul 5, consemnată în inventar, cu data verificării.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-now">În vigoare din 2 feb. 2025</span>
+        <span class="item-title">Nu folosim AI pentru a analiza starea emoțională a angajaților</span>
+        <span class="item-desc">Interdicția vizează explicit contextul profesional și pe cel educațional. Include instrumente de analiză a tonului în interviuri sau în evaluări.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> verificarea modulelor din platformele de resurse umane deja achiziționate.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-soon">2 decembrie 2026</span>
+        <span class="item-title">Am verificat noile interdicții introduse în iulie 2026</span>
+        <span class="item-desc">Regulamentul (UE) 2026/1744 a adăugat la articolul 5 interzicerea sistemelor care generează sau manipulează materiale intime neconsensuale, precum și a celor care generează materiale de abuz sexual asupra copiilor.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> interdicție expresă în politica internă, restricționarea accesului la astfel de funcționalități, verificarea măsurilor tehnice ale furnizorului și un mecanism intern de raportare. Interdicția privește și utilizarea, nu doar furnizarea.</span>
+      </span>
+    </label>
+  </section>
+
+  <section class="block">
+    <div class="sec-head">
+      <span class="sec-num serif">04</span>
+      <h2 class="serif">Transparența — articolul 50</h2>
+    </div>
+    <p class="sec-desc">Se aplică de la 2 august 2026, data generală de aplicare a regulamentului, și <b>nu</b> a fost amânată. De la aceeași dată începe aplicarea și controlul majorității dispozițiilor rămase. Obligațiile diferă după cum sunteți furnizor al sistemului sau doar îl folosiți.</p>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-soon">2 august 2026</span>
+        <span class="item-title">Persoanele care interacționează cu un sistem AI sunt informate despre acest lucru</span>
+        <span class="item-desc">Articolul 50 alineatul (1) îi cere furnizorului să proiecteze sistemul astfel încât persoana să afle că interacționează cu inteligență artificială, cu excepția cazurilor în care acest lucru este evident. Se aplică asistenților virtuali, roboților de conversație și liniilor telefonice automate.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> dacă sunteți furnizor, informarea este integrată în sistem. Dacă sunteți implementator, verificați că mesajul apare efectiv, vizibil la începutul interacțiunii, nu ascuns în termenii de utilizare.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-soon">2 august 2026</span>
+        <span class="item-title">Conținutul de tip deepfake pe care îl publicăm este semnalat ca generat sau manipulat artificial</span>
+        <span class="item-desc">Articolul 50 alineatul (4) vizează conținutul de tip deepfake, nu orice imagine sau material audio realizat cu ajutorul AI. Marcarea tehnică, detectabilă automat, a tuturor ieșirilor sintetice revine în principal furnizorului sistemului.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> o regulă scrisă pentru echipa de comunicare privind materialele de acest tip și o formulă standard de semnalare.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-soon">2 decembrie 2026</span>
+        <span class="item-title">Sistemele care generează conținut sintetic marchează rezultatul în format detectabil automat</span>
+        <span class="item-desc">Obligație a furnizorilor. Pentru sistemele aflate deja pe piață înainte de 2 august 2026 s-a acordat o perioadă de grație de trei luni.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> dacă doar folosiți astfel de instrumente, cereți furnizorului confirmarea scrisă a conformității.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-soon">2 august 2026</span>
+        <span class="item-title">Textele publicate de interes public generate cu AI sunt semnalate</span>
+        <span class="item-desc">Se aplică atunci când textul este publicat pentru a informa publicul asupra unor chestiuni de interes public și nu a trecut printr-o verificare editorială umană cu asumarea răspunderii.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> o procedură de avizare umană pentru comunicatele și anunțurile publice.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-soon">2 august 2026</span>
+        <span class="item-title">Persoanele expuse recunoașterii emoțiilor sau categorizării biometrice sunt informate</span>
+        <span class="item-desc">Articolul 50 alineatul (3) impune informarea persoanelor expuse unui sistem de recunoaștere a emoțiilor ori de categorizare biometrică, în situațiile în care utilizarea acestuia este permisă.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> relevant dacă folosiți control acces biometric sau analiză biometrică. Informare prealabilă și prelucrare conformă cu regulile de protecție a datelor.</span>
+      </span>
+    </label>
+  </section>
+
+  <!-- ---------- 5 ---------- -->
+  <section class="block">
+    <div class="sec-head">
+      <span class="sec-num serif">05</span>
+      <h2 class="serif">Guvernanța internă</h2>
+    </div>
+    <p class="sec-desc">Nu sunt obligații distincte în text, dar sunt documentele pe care le veți prezenta dacă vi se cer dovezi. Fără ele, măsurile luate nu se pot demonstra.</p>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-reco">Recomandat</span>
+        <span class="item-title">Există o politică internă scrisă privind utilizarea AI</span>
+        <span class="item-desc">Ce instrumente sunt permise, ce date nu se introduc niciodată, cine aprobă achiziția unui instrument nou, ce se întâmplă la un incident.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> două-trei pagini, aprobate prin decizie internă și comunicate întregului personal.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-reco">Recomandat</span>
+        <span class="item-title">Există o persoană responsabilă, desemnată în scris</span>
+        <span class="item-desc">Nu este obligatoriu un rol nou. Poate fi atribuit responsabilului cu protecția datelor sau unui director existent.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> o mențiune în fișa postului sau o decizie de desemnare.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-reco">Recomandat</span>
+        <span class="item-title">Utilizarea AI a fost corelată cu obligațiile din GDPR</span>
+        <span class="item-desc">Introducerea de date personale într-un instrument AI rămâne o prelucrare de date, cu tot ce presupune: temei legal, informare, eventual evaluare de impact.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> actualizarea registrului de evidență a activităților de prelucrare.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-reco">Recomandat</span>
+        <span class="item-title">Cunoaștem noul temei legal pentru testarea prejudecăților</span>
+        <span class="item-desc">Articolul 4a, introdus în iulie 2026, permite în anumite situații, inclusiv implementatorilor, prelucrarea categoriilor speciale de date pentru detectarea și corectarea prejudecăților. Numai dacă este strict necesar, dacă prejudecățile pot afecta sănătatea, siguranța ori drepturile fundamentale sau pot produce discriminare, dacă scopul nu poate fi atins cu date sintetice ori anonimizate, cu garanții speciale, ștergerea datelor la încetarea necesității și documentarea necesității. <b>Articolul 4a nu constituie o permisiune generală de utilizare a datelor sensibile și nu înlătură obligațiile GDPR.</b></span>
+        <span class="item-do"><b>Exemplu de măsură:</b> relevant dacă folosiți instrumente de triere sau evaluare a persoanelor. Analizați aplicabilitatea împreună cu responsabilul cu protecția datelor.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-reco">Recomandat</span>
+        <span class="item-title">Contractele cu furnizorii acoperă utilizarea datelor introduse</span>
+        <span class="item-desc">Conturile gratuite și cele destinate persoanelor fizice permit adesea folosirea conținutului introdus pentru antrenarea modelelor. Variantele pentru organizații, de regulă, nu.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> verificarea tipului de abonament pentru fiecare instrument din inventar.</span>
+      </span>
+    </label>
+  </section>
+
+  <!-- ---------- 6 ---------- -->
+  <section class="block">
+    <div class="sec-head">
+      <span class="sec-num serif">06</span>
+      <h2 class="serif">Sistemele cu risc ridicat</h2>
+    </div>
+    <p class="sec-desc">Amânate prin pachetul din iunie 2026, dar nu anulate. Termenul suplimentar este util doar organizațiilor care îl folosesc pentru a se pregăti.</p>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-later">2 decembrie 2027</span>
+        <span class="item-title">Am verificat dacă folosim sisteme din categoriile cu risc ridicat</span>
+        <span class="item-desc">Anexa III include recrutarea și gestionarea personalului, educația, accesul la servicii esențiale, evaluarea bonității și aplicarea legii.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> parcurgerea inventarului prin filtrul Anexei III. Multe organizații descoperă aici instrumente de triere a candidaturilor.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-later">2 decembrie 2027</span>
+        <span class="item-title">Pentru sistemele identificate, există supraveghere umană reală</span>
+        <span class="item-desc">O persoană competentă trebuie să poată înțelege, contesta și anula decizia sistemului, nu doar să apese un buton de confirmare.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> documentarea punctului de decizie umană în fiecare flux automatizat.</span>
+      </span>
+    </label>
+
+    <label class="item">
+      <input type="checkbox" />
+      <span class="item-body">
+        <span class="tag t-later">2 august 2028</span>
+        <span class="item-title">Am verificat sistemele AI integrate în produse deja reglementate</span>
+        <span class="item-desc">Anexa I acoperă dispozitive medicale, utilaje, ascensoare, echipamente de protecție și alte categorii supuse legislației armonizate.</span>
+        <span class="item-do"><b>Exemplu de măsură:</b> relevant mai ales pentru instituții sanitare și organizații cu activitate industrială.</span>
+      </span>
+    </label>
+  </section>
+
+  <!-- ================= REZULTAT ================= -->
+  <div class="result" id="rezultat">
+    <div class="result-inner">
+      <h2 class="serif">Rezultatul dumneavoastră</h2>
+      <div class="score serif"><span id="scor">0</span>%<small> din verificări bifate</small></div>
+      <p id="verdict">Bifați elementele de mai sus pentru a vedea unde se află organizația dumneavoastră.</p>
+      <p style="color:#8FA3AD;font-size:13px;margin-top:12px;max-width:600px;line-height:1.6">
+        Scorul indică nivelul de pregătire pe baza acestei liste și nu reprezintă o certificare a
+        conformității juridice. Lista amestecă obligații aplicabile, termene viitoare și bune practici.
+      </p>
+      <div class="counts">
+        <span class="count"><b id="c-now">0 / 4</b><span>obligații deja aplicabile</span></span>
+        <span class="count"><b id="c-soon">0 / 6</b><span>termene în 2026</span></span>
+        <span class="count"><b id="c-later">0 / 3</b><span>termene în 2027–2028</span></span>
+        <span class="count"><b id="c-reco">0 / 10</b><span>pregătire și bune practici</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions no-print">
+    <button class="btn btn-primary" onclick="window.print()">Salvează ca PDF</button>
+    <button class="btn btn-ghost" onclick="resetAll()">Șterge bifele</button>
+  </div>
+
+  <!-- ================= CTA ================= -->
+  <div class="cta">
+    <h2 class="serif">Formarea personalului este una dintre obligațiile pe care le puteți îndeplini cel mai rapid</h2>
+    <p>
+      Susțin programe de alfabetizare în domeniul inteligenței artificiale pentru companii, instituții
+      publice și unități de învățământ, desfășurate live, online, în limba română sau engleză. Fiecare
+      program este construit pornind de la activitățile reale ale echipei și se încheie cu documentele
+      necesare pentru dovedirea participării și a formării.
+    </p>
+    <a class="btn-white" href="https://www.evotrainhub.com/contact" target="_blank" rel="noopener">Programați o discuție de 30 de minute</a>
+  </div>
+
+  <footer class="foot">
+    <p>
+      <b>Precizare importantă.</b> Acest material are caracter informativ și de orientare. Nu constituie
+      consultanță juridică și nu înlocuiește analiza unui specialist în drept. Termenele au fost
+      verificate la 1 august 2026 și reflectă Regulamentul (UE) 2026/1744 din 8 iulie 2026, publicat în
+      Jurnalul Oficial la 24 iulie și intrat în vigoare la 27 iulie 2026. Textul consolidat al
+      regulamentului și calendarul oficial pot fi consultate pe
+      <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ%3AL_202601744" target="_blank" rel="noopener">EUR-Lex, Regulamentul (UE) 2026/1744</a>
+      și pe pagina Comisiei Europene privind
+      <a href="https://digital-strategy.ec.europa.eu/ro/policies/ai-talent-skills-and-literacy" target="_blank" rel="noopener">alfabetizarea în domeniul IA</a>.
+      <b>Atenție la sursele consultate:</b> versiunea inițială a regulamentului, publicată la 13 iunie 2024, și
+      instrumentele construite pe ea nu reflectă modificările din iulie 2026. Folosiți textul consolidat.
+      Vă recomand să confirmați termenele aplicabile situației dumneavoastră înainte de a lua decizii.
+    </p>
+    <p style="margin-top:14px">
+      © 2026 EvoTrainHub · marca sub care își desfășoară activitatea Boghian Ruxandra PFA · CUI 53185139 ·
+      <a href="https://www.evotrainhub.com" target="_blank" rel="noopener">evotrainhub.com</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+  var cutii = Array.prototype.slice.call(document.querySelectorAll('.item input[type=checkbox]'));
+  var total = cutii.length;
+
+  function claseTag(cutie){
+    var t = cutie.parentElement.querySelector('.tag');
+    return t ? t.className : '';
+  }
+
+  function actualizeaza(){
+    var bifate = 0, now = 0, soon = 0, later = 0, reco = 0;
+    var tNow = 0, tSoon = 0, tLater = 0, tReco = 0;
+
+    cutii.forEach(function(c){
+      var cls = claseTag(c);
+      if (cls.indexOf('t-now') > -1)   { tNow++;   if (c.checked) now++; }
+      if (cls.indexOf('t-soon') > -1)  { tSoon++;  if (c.checked) soon++; }
+      if (cls.indexOf('t-later') > -1) { tLater++; if (c.checked) later++; }
+      if (cls.indexOf('t-reco') > -1)  { tReco++;  if (c.checked) reco++; }
+      if (c.checked) bifate++;
+      c.closest('.item').classList.toggle('done', c.checked);
+    });
+
+    var p = total ? Math.round(bifate / total * 100) : 0;
+    document.getElementById('pct').textContent = p + '%';
+    document.getElementById('fill').style.width = p + '%';
+    document.getElementById('ratio').textContent = bifate + ' din ' + total + ' bifate';
+    document.getElementById('scor').textContent = p;
+
+    document.getElementById('c-now').textContent   = now + ' / ' + tNow;
+    document.getElementById('c-soon').textContent  = soon + ' / ' + tSoon;
+    document.getElementById('c-later').textContent = later + ' / ' + tLater;
+    document.getElementById('c-reco').textContent  = reco + ' / ' + tReco;
+
+    var v = document.getElementById('verdict');
+    var restante = tNow - now;
+
+    if (bifate === 0){
+      v.textContent = 'Bifați elementele de mai sus pentru a vedea unde se află organizația dumneavoastră.';
+    } else if (restante > 0){
+      v.textContent = 'Aveți ' + restante + ' ' + (restante === 1 ? 'obligație deja aplicabilă care nu este acoperită' : 'obligații deja aplicabile care nu sunt acoperite') +
+        '. Acestea nu au fost amânate și reprezintă prioritatea imediată, înaintea pregătirii pentru termenele viitoare.';
+    } else if (soon < tSoon){
+      v.textContent = 'Obligațiile deja aplicabile sunt acoperite. Urmează cele șase verificări cu termen în 2026, dintre care patru devin aplicabile la 2 august, iar două la 2 decembrie. Aici merită să vă concentrați acum.';
+    } else if (p < 100){
+      v.textContent = 'Tot ce este exigibil în acest moment este acoperit. Ce a rămas ține de pregătirea pentru 2027–2028 și de documentele interne care vă permit să demonstrați măsurile luate.';
+    } else {
+      v.textContent = 'Toate verificările sunt bifate. Reluați acest exercițiu la fiecare achiziție de instrument nou și cel puțin o dată pe an, pentru că inventarul se schimbă mai repede decât regulamentul.';
+    }
+  }
+
+  function resetAll(){
+    cutii.forEach(function(c){ c.checked = false; });
+    actualizeaza();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  cutii.forEach(function(c){ c.addEventListener('change', actualizeaza); });
+  actualizeaza();
+</script>
+
+</body>
+</html>
