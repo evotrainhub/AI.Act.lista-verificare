@@ -650,10 +650,20 @@
       lăsa datele de contact.
     </p>
 
-    <form id="capture-form">
+    <form id="capture-form"
+          action="https://formspree.io/f/xzdnljza"
+          method="POST"
+          target="formspree-hidden-frame">
+
+      <input type="hidden" name="_subject" value="Contact din listă de verificare EU AI Act" />
+      <input type="hidden" name="scor_bifat" id="hf-scor" value="0%" />
+      <input type="hidden" name="numar_puncte_nebifate" id="hf-count" value="23" />
+      <input type="hidden" name="titluri_puncte_nebifate" id="hf-titluri" value="" />
+      <input type="hidden" name="sursa" value="Listă de verificare EU AI Act – evotrainhub.github.io" />
+
       <div class="row">
-        <input type="text" id="cf-org" placeholder="Denumirea organizației" autocomplete="organization" />
-        <input type="email" id="cf-email" placeholder="Adresa de e-mail *" autocomplete="email" required />
+        <input type="text" name="organizatie" id="cf-org" placeholder="Denumirea organizației" autocomplete="organization" />
+        <input type="email" name="email" id="cf-email" placeholder="Adresa de e-mail *" autocomplete="email" required />
       </div>
 
       <label class="consent-row">
@@ -665,7 +675,7 @@
       </label>
 
       <label class="consent-row">
-        <input type="checkbox" id="cf-consent-2" />
+        <input type="checkbox" id="cf-consent-2" name="acord_materiale_viitoare" value="da" />
         <span>Doresc să primesc și materiale informative despre inteligența artificială din partea EvoTrainHub.</span>
       </label>
 
@@ -675,6 +685,8 @@
         Mulțumesc! Vă răspund în maximum 24 de ore în zilele lucrătoare.
       </p>
     </form>
+
+    <iframe name="formspree-hidden-frame" style="display:none" title="trimitere formular"></iframe>
 
     <p class="preview" id="cf-preview">Rezultatul generat va fi atașat automat solicitării dumneavoastră.</p>
   </div>
@@ -819,70 +831,59 @@
   actualizeaza();
   genereazaPlan();
 
-  /* ---------------- Captare contact: opțională, doar pentru urmărire personală ---------------- */
-  var FORMSPREE_ID = 'xzdnljza';
+  /* ---------------- Captare contact: formular clasic, trimis direct către Formspree ----------------
+     Nu se mai folosește fetch/JSON. Formularul se trimite ca un formular HTML obișnuit, către un
+     cadru ascuns, ceea ce ocolește orice restricție CORS specifică planurilor gratuite. ---------------- */
+  var captureForm = document.getElementById('capture-form');
+  var hiddenFrame = document.querySelector('iframe[name="formspree-hidden-frame"]');
+  var trimitereInCurs = false;
 
-  document.getElementById('capture-form').addEventListener('submit', function(e){
-    e.preventDefault();
+  function actualizeazaCampuriAscunse(){
+    var lista = itemiNebifati();
+    var scorCurent = document.getElementById('scor').textContent;
+    document.getElementById('hf-scor').value = scorCurent + '%';
+    document.getElementById('hf-count').value = lista.length;
+    document.getElementById('hf-titluri').value = lista.length
+      ? lista.map(function(it){ return it.titlu; }).join(' | ')
+      : '(toate punctele sunt bifate)';
+  }
+  cutii.forEach(function(c){ c.addEventListener('change', actualizeazaCampuriAscunse); });
+  actualizeazaCampuriAscunse();
 
-    var org = document.getElementById('cf-org').value.trim();
+  captureForm.addEventListener('submit', function(e){
     var email = document.getElementById('cf-email').value.trim();
     var consent1 = document.getElementById('cf-consent-1').checked;
-    var consent2 = document.getElementById('cf-consent-2').checked;
     var errEl = document.getElementById('cf-err');
     var okEl = document.getElementById('cf-ok');
-    var btn = e.target.querySelector('button[type=submit]');
+    var btn = captureForm.querySelector('button[type=submit]');
 
     errEl.style.display = 'none';
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      e.preventDefault();
       errEl.textContent = 'Introduceți o adresă de email validă.';
       errEl.style.display = 'block';
       return;
     }
     if (!consent1){
+      e.preventDefault();
       errEl.textContent = 'Este necesar acordul pentru prelucrarea datelor.';
       errEl.style.display = 'block';
       return;
     }
 
-    var lista = itemiNebifati();
-    var scorCurent = document.getElementById('scor').textContent;
-
-    var payload = {
-      _subject: 'Contact din listă de verificare EU AI Act',
-      email: email,
-      organizatie: org || '(nespecificată)',
-      scor_bifat: scorCurent + '%',
-      numar_puncte_nebifate: lista.length,
-      titluri_puncte_nebifate: lista.length ? lista.map(function(it){ return it.titlu; }).join(' | ') : '(toate punctele sunt bifate)',
-      acord_materiale_viitoare: consent2 ? 'da' : 'nu',
-      sursa: 'Listă de verificare EU AI Act – evotrainhub.github.io'
-    };
-
+    actualizeazaCampuriAscunse();
+    trimitereInCurs = true;
     btn.disabled = true;
     btn.textContent = 'Se trimite...';
+    // formularul continuă să se trimită normal, către cadrul ascuns
+  });
 
-    fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-      .then(function(res){
-        if (res.ok){
-          document.getElementById('capture-form').reset();
-          document.getElementById('capture-form').style.display = 'none';
-          okEl.style.display = 'block';
-        } else {
-          throw new Error('Formspree a răspuns cu eroare');
-        }
-      })
-      .catch(function(){
-        errEl.textContent = 'Solicitarea nu a putut fi trimisă. Vă rog să încercați din nou sau să scrieți direct la evotrainhub@gmail.com.';
-        errEl.style.display = 'block';
-        btn.disabled = false;
-        btn.textContent = 'Trimiteți contactul meu';
-      });
+  hiddenFrame.addEventListener('load', function(){
+    if (!trimitereInCurs) return; // ignorăm încărcarea inițială, goală, a cadrului
+    trimitereInCurs = false;
+    captureForm.style.display = 'none';
+    document.getElementById('cf-ok').style.display = 'block';
   });
 </script>
 
