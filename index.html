@@ -835,8 +835,6 @@
      Nu se mai folosește fetch/JSON. Formularul se trimite ca un formular HTML obișnuit, către un
      cadru ascuns, ceea ce ocolește orice restricție CORS specifică planurilor gratuite. ---------------- */
   var captureForm = document.getElementById('capture-form');
-  var hiddenFrame = document.querySelector('iframe[name="formspree-hidden-frame"]');
-  var trimitereInCurs = false;
 
   function actualizeazaCampuriAscunse(){
     var lista = itemiNebifati();
@@ -850,6 +848,9 @@
   cutii.forEach(function(c){ c.addEventListener('change', actualizeazaCampuriAscunse); });
   actualizeazaCampuriAscunse();
 
+  /* Mesajul de confirmare apare imediat ce validarea trece, fără să aștepte încărcarea
+     cadrului ascuns: pagina de confirmare a Formspree poate refuza să se afișeze într-un
+     cadru străin, caz în care evenimentul de încărcare nu se mai declanșează niciodată. */
   captureForm.addEventListener('submit', function(e){
     var email = document.getElementById('cf-email').value.trim();
     var consent1 = document.getElementById('cf-consent-1').checked;
@@ -873,17 +874,13 @@
     }
 
     actualizeazaCampuriAscunse();
-    trimitereInCurs = true;
     btn.disabled = true;
     btn.textContent = 'Se trimite...';
-    // formularul continuă să se trimită normal, către cadrul ascuns
-  });
-
-  hiddenFrame.addEventListener('load', function(){
-    if (!trimitereInCurs) return; // ignorăm încărcarea inițială, goală, a cadrului
-    trimitereInCurs = false;
-    captureForm.style.display = 'none';
-    document.getElementById('cf-ok').style.display = 'block';
+    // formularul continuă să se trimită normal, către cadrul ascuns, în fundal
+    setTimeout(function(){
+      captureForm.style.display = 'none';
+      okEl.style.display = 'block';
+    }, 400);
   });
 </script>
 
