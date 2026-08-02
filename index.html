@@ -681,10 +681,11 @@
 
       <button type="submit" class="btn btn-primary">Solicitați o discuție personalizată</button>
       <p class="err" id="cf-err"></p>
-      <p class="ok" id="cf-ok">
-        Mulțumim! Mesajul tău a fost trimis. Te vom contacta în cel mai scurt timp.
-      </p>
     </form>
+
+    <p class="ok" id="cf-ok">
+      Mulțumim! Mesajul tău a fost trimis. Te vom contacta în cel mai scurt timp.
+    </p>
 
     <iframe name="formspree-hidden-frame" style="display:none" title="trimitere formular"></iframe>
 
@@ -879,7 +880,10 @@
     // formularul continuă să se trimită normal, către cadrul ascuns, în fundal
     setTimeout(function(){
       captureForm.style.display = 'none';
+      var nota = document.getElementById('cf-preview');
+      if (nota) nota.style.display = 'none';
       okEl.style.display = 'block';
+      okEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 400);
   });
 </script>
